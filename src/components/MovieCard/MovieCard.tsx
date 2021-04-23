@@ -6,14 +6,23 @@ type MovieProps = {
 	user: string;
 	votes: number;
 	id: string;
+	handleUpvote: Function
 };
 
-const MovieCard: React.FC<MovieProps> = ({ movie, user, votes, id }) => (
+const MovieCard: React.FC<MovieProps> = ({ movie, user, votes, id, handleUpvote }) => (
 	<div className="MovieCard" key={id}>
 		<h2>{movie}</h2>
 		<p>Added by: {user}</p>
 		<p>Upvotes: {votes}</p>
-		<button>upvote</button>
+		<button
+		onClick={() =>
+			handleUpvote({
+				movie: movie,
+				user: user,
+				votes: votes + 1,
+				id: id
+		})}
+>upvote</button>
 	</div>
 );
 
