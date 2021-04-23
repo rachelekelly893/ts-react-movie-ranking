@@ -49,6 +49,14 @@ function App() {
 			});
 	}
 
+  //upvote
+  function handleUpvote(updatedMovie: Movie): void {
+		ref.doc(updatedMovie.id).update(updatedMovie).catch((err) => {
+			console.error(err);
+		});
+	}
+
+
 	return (
 		<div>
 			<InputBox 
@@ -60,7 +68,13 @@ function App() {
       />
 			{loading ? <h1>Loading...</h1> : null}
 			{movies.map((movie) => (
-				<MovieCard user={movie.user} movie={movie.movie} votes={movie.votes} id={movie.id} />
+				<MovieCard 
+        user={movie.user} 
+        movie={movie.movie} 
+        votes={movie.votes} 
+        id={movie.id}
+        handleUpvote= {handleUpvote} 
+        />
 			))}
 		</div>
 	);
