@@ -1,0 +1,37 @@
+p, h2 {
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.MovieCard {
+	background: rgb(245, 244, 244);
+	border-radius: 10px;
+	margin: .5em;
+	text-align: center;
+	padding: 1em 5em;
+}
+
+.MovieCard:hover {
+	transform: scale(1.01);
+	transition: all .2s ease-in-out;
+	box-shadow: 0 0 .5em rgba(33, 33, 33, 0.63); 
+}
+
+.MovieCard > button {
+	background-color: #8a59e4;
+	color: white;
+	padding: .6em 2em;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+	margin: 1em;
+}
+
+.MovieCard > button:hover {
+	background-color: #552aa5;
+}
+
+.MovieCard > button:focus {     
+    background-color:rgb(87, 209, 104);    
+}
