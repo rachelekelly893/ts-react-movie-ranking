@@ -17,8 +17,8 @@ export type Movie = {
 function App() {
 	const [ movies, setMovies ] = useState<Movie[]>([]);
 	const [ loading, setLoading ] = useState<boolean>(false);
-  const [ user, setUser ] = useState<string>('');
-	const [ movie, setMovie ] = useState<string>('')
+	const [ user, setUser ] = useState<string>('');
+	const [ movie, setMovie ] = useState<string>('');
 
 	const ref = firebase.firestore().collection('movies');
 
@@ -39,18 +39,15 @@ function App() {
 		getMovies();
 	});
 
-  //save data
+	//save data
 	function addMovie(newMovie: Movie): void {
-		ref
-			.doc(newMovie.id)
-			.set(newMovie)
-			.catch((err) => {
-				console.error(err);
-			});
+		ref.doc(newMovie.id).set(newMovie).catch((err) => {
+			console.error(err);
+		});
 	}
 
-  //upvote
-  function handleUpvote(updatedMovie: Movie): void {
+	//upvote
+	function handleUpvote(updatedMovie: Movie): void {
 		ref.doc(updatedMovie.id).update(updatedMovie).catch((err) => {
 			console.error(err);
 		});
@@ -63,27 +60,23 @@ function App() {
 		});
 	}
 
-
 	return (
 		<div>
-			<InputBox 
-      user={user}
-      setUser={setUser}
-      movie={movie}
-      setMovie={setMovie}
-      addMovie={addMovie}
-      />
+			<InputBox user={user} setUser={setUser} movie={movie} setMovie={setMovie} addMovie={addMovie} />
 			{loading ? <h1>Loading...</h1> : null}
-			{movies.map((movie) => (
-				<MovieCard 
-        user={movie.user} 
-        movie={movie.movie} 
-        votes={movie.votes} 
-        id={movie.id}
-        handleUpvote= {handleUpvote}
-		handleDownvote={handleDownvote} 
-        />
-			))}
+			<div className="MovieCards">
+				{movies.map((movie) => (
+					<MovieCard
+						key={movie.id}
+						user={movie.user}
+						movie={movie.movie}
+						votes={movie.votes}
+						id={movie.id}
+						handleUpvote={handleUpvote}
+						handleDownvote={handleDownvote}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }
