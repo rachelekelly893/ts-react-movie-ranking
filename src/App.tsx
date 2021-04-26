@@ -56,6 +56,13 @@ function App() {
 		});
 	}
 
+	//downvote
+	function handleDownvote(updatedMovie: Movie): void {
+		ref.doc(updatedMovie.id).update(updatedMovie).catch((err) => {
+			console.error(err);
+		});
+	}
+
 
 	return (
 		<div>
@@ -73,7 +80,8 @@ function App() {
         movie={movie.movie} 
         votes={movie.votes} 
         id={movie.id}
-        handleUpvote= {handleUpvote} 
+        handleUpvote= {handleUpvote}
+		handleDownvote={handleDownvote} 
         />
 			))}
 		</div>
