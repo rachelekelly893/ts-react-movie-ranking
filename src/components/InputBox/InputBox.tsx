@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 
+import AutocompleteInput from '../AutocompleteInput/AutocompleteInput'
+
+
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
@@ -40,22 +43,16 @@ const InputBox: React.FC<InputProps> = ({ user, setUser, movie, setMovie, addMov
 	function handleUserChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setUser(e.target.value);
 	}
-	function handleMovieChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setMovie(e.target.value);
-	}
 
 	return (
-		<div className="InputBox">
-			<h1>Add New Movie</h1>
+		<div className="InputBox" >
 			<form className={classes.root} noValidate autoComplete="off">
-				<TextField id="standard-basic" label="Username" placeholder="Username" onChange={handleUserChange} />
-				<TextField
-					id="filled-basic"
-					label="Movie Title"
-					placeholder="Movie Title"
-					onChange={handleMovieChange}
+				<AutocompleteInput 
+				setMovie={setMovie}
 				/>
+				<TextField  style={{ width: '100%' }} id="standard-basic" label="Username" placeholder="Username" onChange={handleUserChange} />
 			</form>
+			<div>{`${movie} ${user}`}</div>
 			<Button
 				variant="contained"
 				color="primary"
