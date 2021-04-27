@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-type MovieProps = {
+export type MovieProps = {
 	movie: string;
 	user: string;
 	votes: number;
