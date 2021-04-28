@@ -47,7 +47,7 @@ const MovieCard: React.FC<MovieProps> = ({ movie, user, votes, id, handleUpvote,
 							movie: movie,
 							user: user,
 							votes: votes + 1,
-							id: id
+							id: movie
 						})}
 				/>
 				<Button
@@ -60,7 +60,7 @@ const MovieCard: React.FC<MovieProps> = ({ movie, user, votes, id, handleUpvote,
 							movie: movie,
 							user: user,
 							votes: votes - 1,
-							id: id
+							id: movie
 						})}
 				/>
 			</div>
