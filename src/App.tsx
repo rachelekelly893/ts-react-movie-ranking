@@ -41,9 +41,23 @@ function App() {
 
 	//save data
 	function addMovie(newMovie: Movie): void {
-		ref.doc(newMovie.id).set(newMovie).catch((err) => {
-			console.error(err);
-		});
+		const movieRef = ref.doc(newMovie.id);
+		movieRef
+			.get()
+			.then((doc) => {
+				if (doc.exists) {
+					ref.doc(newMovie.id).onSnapshot((doc) => {
+						alert('this movie has already been added!');
+					});
+				} else {
+					ref.doc(newMovie.id).set(newMovie).catch((err) => {
+						console.error(err);
+					});
+				}
+			})
+			.catch((error: any) => {
+				console.log('Error getting document:', error);
+			});
 	}
 
 	//upvote
