@@ -31,12 +31,13 @@ type InputProps = {
 	user: string;
 	setUser: Function;
 	movie: string;
-	setMovie: Function;
+	stableSetMovie: Function;
 	addMovie: Function;
 };
 
-const InputBox: React.FC<InputProps> = ({user, setUser, movie, setMovie, addMovie}) => {
-	
+
+const InputBox: React.FC<InputProps> = ({ user, setUser, movie, stableSetMovie, addMovie }) => {
+  
 	const classes = useStyles();
 
 	function handleUserChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -47,7 +48,7 @@ const InputBox: React.FC<InputProps> = ({user, setUser, movie, setMovie, addMovi
 		<div className="InputBox" >
 			<form className={classes.root} noValidate autoComplete="off">
 				<AutocompleteInput 
-				setMovie={setMovie}
+				stableSetMovie={stableSetMovie}
 				/>
 				<TextField  style={{ width: '100%' }} id="standard-basic" label="Username" placeholder="Username" onChange={handleUserChange} />
 			</form>
