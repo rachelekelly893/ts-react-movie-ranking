@@ -20,7 +20,7 @@ function App() {
 	const [ user, setUser ] = useState<string>('');
 	const [ movie, setMovie ] = useState<string>('');
 
-	const stableSetMovie = useCallback(setMovie, [])
+	const stableSetMovie = useCallback(setMovie, [setMovie])
 
 	const ref = firebase.firestore().collection('movies');
 
