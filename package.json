@@ -9,7 +9,6 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@types/material-ui": "^0.21.8",
     "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "firebase": "^8.4.1",
     "react": "^17.0.2",
@@ -43,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.6",
+    "@types/react": "^17.0.4",
     "@types/uuid": "^8.3.0"
   }
 }
