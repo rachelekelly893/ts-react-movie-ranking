@@ -10,7 +10,7 @@ describe('Login component tests', () => {
 		container = document.createElement('div');
 		document.body.appendChild(container);
 		ReactDOM.render(
-			<InputBox user={'test user'} setUser={()=>{}} movie={'test movie'} setMovie={()=>{}} addMovie={() => {}} />,
+			<InputBox user={'test user'} setUser={()=>{}} movie={'test movie'} stableSetMovie={()=>{}} addMovie={() => {}} />,
 			container
 		);
 	});
