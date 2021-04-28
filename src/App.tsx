@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import firebase from './firebase';
 
@@ -19,6 +19,8 @@ function App() {
 	const [ loading, setLoading ] = useState<boolean>(false);
 	const [ user, setUser ] = useState<string>('');
 	const [ movie, setMovie ] = useState<string>('');
+
+	const stableSetMovie = useCallback(setMovie, [setMovie])
 
 	const ref = firebase.firestore().collection('movies');
 
@@ -41,9 +43,23 @@ function App() {
 
 	//save data
 	function addMovie(newMovie: Movie): void {
-		ref.doc(newMovie.id).set(newMovie).catch((err) => {
-			console.error(err);
-		});
+		const movieRef = ref.doc(newMovie.id);
+		movieRef
+			.get()
+			.then((doc) => {
+				if (doc.exists) {
+					ref.doc(newMovie.id).onSnapshot((doc) => {
+						alert('this movie has already been added!');
+					});
+				} else {
+					ref.doc(newMovie.id).set(newMovie).catch((err) => {
+						console.error(err);
+					});
+				}
+			})
+			.catch((error: any) => {
+				console.log('Error getting document:', error);
+			});
 	}
 
 	//upvote
@@ -62,7 +78,7 @@ function App() {
 
 	return (
 		<div>
-			<InputBox user={user} setUser={setUser} movie={movie} setMovie={setMovie} addMovie={addMovie} />
+			<InputBox user={user} setUser={setUser} movie={movie} stableSetMovie={stableSetMovie} addMovie={addMovie} />
 			{loading ? <h1>Loading...</h1> : null}
 			<div className="MovieCards">
 				{movies.map((movie) => (

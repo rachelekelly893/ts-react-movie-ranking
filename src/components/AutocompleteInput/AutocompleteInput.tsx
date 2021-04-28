@@ -7,28 +7,28 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { top100Films } from './topMovies';
 
 type AutocompleteProps = {
-	setMovie: Function;
+	stableSetMovie: Function;
 };
 
-const AutocompleteInput: React.FC<AutocompleteProps> = ({ setMovie }) => {
+const AutocompleteInput: React.FC<AutocompleteProps> = ({ stableSetMovie }) => {
 	const [ value, setValue ] = React.useState<string | null>(top100Films[0]);
 	const [ inputValue, setInputValue ] = React.useState('');
 
 	useEffect(() => {
-		setMovie(inputValue)
-	}, [inputValue])
+		stableSetMovie(inputValue);
+	}, [inputValue, stableSetMovie])
 
 	return (
 		<div style={{ width: '100%' }}>
 			<Autocomplete
 				onChange={(event: any, newValue: string | null) => {
 					setValue(newValue);
-					setMovie(value);
+					stableSetMovie(value);
 				}}
 				inputValue={inputValue}
 				onInputChange={(event, newInputValue) => {
 					setInputValue(newInputValue);
-					setMovie(inputValue);
+					stableSetMovie(inputValue);
 				}}
 				freeSolo
 				id="free-solo-2-demo"
