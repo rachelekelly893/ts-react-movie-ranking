@@ -6,7 +6,6 @@ import { fireEvent } from '@testing-library/react';
 describe('InputBox component tests', () => {
 	let container: HTMLDivElement;
 	const mockAddMovie = jest.fn();
-	const mockSetUser = jest.fn();
 	const mockStableSetMovie = jest.fn();
 
 	beforeEach(() => {
@@ -14,8 +13,11 @@ describe('InputBox component tests', () => {
 		document.body.appendChild(container);
 		ReactDOM.render(
 			<InputBox
-				user={'test user'}
-				setUser={mockSetUser}
+				currentUser={{
+					email: 'test@email.com',
+					displayName: 'test display name'
+				}}
+				userName={'test user'}
 				movie={'test movie'}
 				stableSetMovie={mockStableSetMovie}
 				addMovie={mockAddMovie}
@@ -31,19 +33,11 @@ describe('InputBox component tests', () => {
 
 	it('Renders InputBox correctly', () => {
 		const inputs = container.querySelectorAll('input');
-		expect(inputs).toHaveLength(2);
+		expect(inputs).toHaveLength(1);
 		const buttons = container.getElementsByTagName('BUTTON');
 		expect(buttons).toHaveLength(1);
 	});
 
-	it('allows username to be input then runs setUser()', () => {
-		const inputs = container.querySelectorAll('input');
-		const userInput = inputs[1];
-		expect(mockSetUser.mock.calls.length).toBe(0);
-		fireEvent.change(userInput, { target: { value: 'some user' } });
-		expect(inputs[1].value).toBe('some user');
-		expect(mockSetUser.mock.calls.length).toBe(1);
-	});
 
 	it('allows movie title to be input and then runs stableSetMovie()', () => {
 		const inputs = container.querySelectorAll('input');
