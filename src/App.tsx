@@ -5,6 +5,9 @@ import firebase from './firebase';
 //components
 import InputBox from './components/InputBox/InputBox';
 import MovieCard from './components/MovieCard/MovieCard';
+import { AuthProvider } from './components/AuthProvider/Auth';
+import Login from './components/AuthProvider/Login';
+import Welcome from './components/Welcome/Welcome';
 
 //types
 export type Movie = {
@@ -17,10 +20,11 @@ export type Movie = {
 function App() {
 	const [ movies, setMovies ] = useState<Movie[]>([]);
 	const [ loading, setLoading ] = useState<boolean>(false);
-	const [ user, setUser ] = useState<string>('');
+	const [ currentUser, setCurrentUser ] = useState<any | null>(null);
 	const [ movie, setMovie ] = useState<string>('');
+	const [ userName, setUserName ] = useState<string>('');
 
-	const stableSetMovie = useCallback(setMovie, [setMovie])
+	const stableSetMovie = useCallback(setMovie, [ setMovie ]);
 
 	const ref = firebase.firestore().collection('movies');
 
@@ -78,21 +82,35 @@ function App() {
 
 	return (
 		<div>
-			<InputBox user={user} setUser={setUser} movie={movie} stableSetMovie={stableSetMovie} addMovie={addMovie} />
-			{loading ? <h1>Loading...</h1> : null}
-			<div className="MovieCards">
-				{movies.map((movie) => (
-					<MovieCard
-						key={movie.id}
-						user={movie.user}
-						movie={movie.movie}
-						votes={movie.votes}
-						id={movie.id}
-						handleUpvote={handleUpvote}
-						handleDownvote={handleDownvote}
+			<AuthProvider currentUser={currentUser} setCurrentUser={setCurrentUser}>
+				<Welcome 
+				currentUser={currentUser} />
+				<Login setUserName={setUserName} userName={userName} currentUser={currentUser} />
+				{!currentUser ? null : (
+					<InputBox
+						currentUser={currentUser}
+						movie={movie}
+						userName={userName}
+						stableSetMovie={stableSetMovie}
+						addMovie={addMovie}
 					/>
-				))}
-			</div>
+				)}
+				{loading ? <h1>Loading...</h1> : null}
+				<div className="MovieCards">
+					{movies.map((movie) => (
+						<MovieCard
+							currentUser={currentUser}
+							key={movie.id}
+							user={movie.user}
+							movie={movie.movie}
+							votes={movie.votes}
+							id={movie.id}
+							handleUpvote={handleUpvote}
+							handleDownvote={handleDownvote}
+						/>
+					))}
+				</div>
+			</AuthProvider>
 		</div>
 	);
 }

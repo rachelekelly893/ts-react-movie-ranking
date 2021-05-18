@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export type MovieProps = {
+	currentUser: any;
 	movie: string;
 	user: string;
 	votes: number;
@@ -28,42 +29,51 @@ export type MovieProps = {
 	handleDownvote: Function;
 };
 
-const MovieCard: React.FC<MovieProps> = ({ movie, user, votes, id, handleUpvote, handleDownvote }) => {
+const MovieCard: React.FC<MovieProps> = ({ currentUser, movie, user, votes, handleUpvote, handleDownvote }) => {
 	const classes = useStyles();
 
 	return (
-		<div className="MovieCard">
+		<div title="MovieCard" className="MovieCard">
 			<h2>{movie}</h2>
 			<p>Added by: {user}</p>
 			<p>Upvotes: {votes}</p>
-			<div>
-				<Button
-					variant="contained"
-					color="primary"
-					className={classes.button}
-					endIcon={<ThumbUpIcon />}
-					onClick={() =>
-						handleUpvote({
-							movie: movie,
-							user: user,
-							votes: votes + 1,
-							id: movie
-						})}
-				/>
-				<Button
-					variant="contained"
-					color="secondary"
-					className={classes.button}
-					endIcon={<ThumbDownIcon />}
-					onClick={() =>
-						handleDownvote({
-							movie: movie,
-							user: user,
-							votes: votes - 1,
-							id: movie
-						})}
-				/>
-			</div>
+			{currentUser ? 
+				<div>
+					<Button
+						variant="contained"
+						color="primary"
+						className={classes.button}
+						endIcon={<ThumbUpIcon />}
+						onClick={() =>
+							handleUpvote({
+								movie: movie,
+								user: user,
+								votes: votes + 1,
+								id: movie
+							})}
+					>
+					Upvote
+					</Button>
+					<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						startIcon={<ThumbDownIcon />}
+						onClick={() =>
+							handleDownvote({
+								movie: movie,
+								user: user,
+								votes: votes - 1,
+								id: movie
+							})}
+					>
+					Downvote
+					</Button>
+				</div> 
+				:
+				<>
+				</>
+				}
 		</div>
 	);
 };

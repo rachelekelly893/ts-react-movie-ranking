@@ -1,6 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-  
+import 'firebase/auth';
+
+
  const firebaseConfig = {
     apiKey: "AIzaSyAM7yUXDCwVCiP9UQ1d0rAO-Itf4xDRQfc",
     authDomain: "ts-react-movie-ranking.firebaseapp.com",
